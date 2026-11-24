@@ -1,0 +1,299 @@
+/* All styling for the Animator app. Its code only attaches class names. */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+
+/* ── Layout: two columns ─────────────────────────────────────────────────── */
+
+.app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: #1a1a2e;
+  color: #d4c5a0;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+}
+
+/* Left column: the code editor. */
+.code-col {
+  width: 42%;
+  min-width: 320px;
+  max-width: 720px;
+  flex-shrink: 0;
+  display: flex;
+  border-right: 1px solid #3a3a5e;
+  background: #0f0f1e;
+}
+
+/* The code column stays in the DOM when collapsed, so CodeMirror keeps its
+   state; hiding it gives the right column the full width. */
+.app.code-hidden .code-col { display: none; }
+
+/* A small emoji button (the code pane's collapse toggle, and the playback
+   controls once they exist). */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2a2a4a;
+  color: #d4c5a0;
+  border: 1px solid #4a4a8a;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 5px 8px;
+}
+.icon-btn:hover { background: #3a3a5e; }
+
+/* ── Code panel (left column) ───────────────────────────────────────────── */
+
+.code-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #1a1a3e;
+  border-bottom: 1px solid #3a3a5e;
+}
+.code-title {
+  color: #e8d8b0;
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/* Wrapper holding the editor. */
+.code-editor-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+}
+/* CodeMirror mount node: grows to fill the panel. */
+.code-editor {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  background: #0d0d1a;
+}
+.code-editor .cm-editor { width: 100%; height: 100%; }
+
+/* Collapsible reference of the built-ins available to draw functions. */
+.reference {
+  margin: 8px 14px 0;
+  border: 1px solid #3a3a5e;
+  border-radius: 4px;
+  background: #0d0d1a;
+  overflow: hidden;
+}
+.reference-summary {
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #b8a888;
+  font-family: monospace;
+  font-size: 12px;
+  user-select: none;
+}
+.reference-summary:hover { color: #e8d8b0; }
+.reference-body {
+  padding: 4px 12px 10px;
+  border-top: 1px solid #3a3a5e;
+}
+.reference-group { margin-top: 8px; }
+.reference-group-title {
+  color: #8a8aca;
+  font-family: monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.reference-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 1px 0;
+}
+.reference-sig {
+  color: #89ddff;
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre;
+}
+.reference-desc { color: #6a7a8a; font-size: 11px; }
+
+/* ── Animation area (right column) ──────────────────────────────────────── */
+
+.canvas-area {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a14;
+  container-type: size;
+}
+
+/* The interpreter's List(Path) (or its error), shown as text before the
+   animation pane is built. */
+.output {
+  align-self: stretch;
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #cfe3ff;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/* Leave room for the reveal button, which only overlays this pane while the
+   code column is hidden. */
+.app.code-hidden .output { padding-top: 48px; }
+
+/* Button that reveals the code column again when it is hidden. */
+.reveal-code {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+}
+
+/* A centred square that fits the (possibly non-square) animation area. Give your
+   <canvas> this class, so that drawings aren't stretched. */
+.canvas {
+  width: min(100cqw, 100cqh);
+  height: min(100cqw, 100cqh);
+}
+
+
+/* Phase 3: a creative workspace with controls outside the artwork. */
+.studio-pane {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: #101320;
+  color: #e6edf5;
+}
+.studio-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #2c3447;
+  background: #151a29;
+}
+.studio-eyebrow { color: #8babc2; font-size: 10px; letter-spacing: .16em; margin-bottom: 5px; }
+.studio-header h2 { font-size: 20px; font-weight: 600; overflow-wrap: anywhere; }
+.studio-header > div:first-child { min-width: 0; flex: 1; }
+.playback-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+.playback-status { color: #a5b8c9; font-size: 11px; margin-right: 5px; }
+.studio-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 11px;
+  min-height: 34px;
+  border: 1px solid #3a465d;
+  border-radius: 7px;
+  color: #e6edf5;
+  background: #202a3c;
+  font: inherit;
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.studio-btn:hover { background: #2d3b51; }
+.studio-btn:disabled { opacity: .45; cursor: not-allowed; }
+.export-btn { background: #a7f3d0; border-color: #a7f3d0; color: #102b24; font-weight: 600; }
+.export-btn:hover { background: #d1fae5; }
+.studio-pane .canvas-area { flex: 1 0 180px; min-height: 180px; }
+.studio-pane .canvas { flex-shrink: 0; }
+.studio-pane .output {
+  flex: 0 0 auto;
+  max-height: 110px;
+  padding: 10px 18px;
+  background: #321e2c;
+  color: #ffc1c1;
+  border-top: 1px solid #794555;
+}
+.drawing-controls {
+  display: grid;
+  grid-template-columns: minmax(130px, 1.25fr) repeat(2, minmax(90px, 1fr));
+  gap: 16px;
+  padding: 14px 22px;
+  border-top: 1px solid #2c3447;
+  background: #151a29;
+}
+.drawing-controls label, .style-grid label { display: flex; flex-direction: column; gap: 7px; min-width: 0; font-size: 12px; color: #bdccdc; }
+.drawing-controls select, .style-grid select {
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 8px;
+  border: 1px solid #3a465d;
+  border-radius: 6px;
+  color: #e6edf5;
+  background: #202a3c;
+  font: inherit;
+}
+.studio-pane input[type="range"] { width: 100%; min-height: 28px; accent-color: #a7f3d0; cursor: pointer; }
+.style-panel { flex-shrink: 0; border-top: 1px solid #2c3447; padding: 12px 22px; background: #111725; }
+.style-panel summary { cursor: pointer; color: #d3e3f1; font-size: 12px; font-weight: 600; }
+.style-grid { display: grid; grid-template-columns: minmax(100px, 1.3fr) 70px 80px minmax(90px, 1fr) auto; align-items: end; gap: 12px; margin-top: 14px; }
+.style-grid input[type="color"] { width: 100%; height: 32px; padding: 2px; border: 1px solid #3a465d; border-radius: 5px; background: #202a3c; cursor: pointer; }
+.style-footer { display: flex; gap: 12px; align-items: center; margin-top: 12px; }
+.style-footer p { color: #93a7bc; font-size: 11px; line-height: 1.5; }
+.palette-swatches { display: flex; gap: 3px; flex-shrink: 0; }
+.palette-swatches span { width: 15px; height: 15px; border-radius: 50%; border: 1px solid #ffffff30; }
+.studio-pane :is(button, a, select, input, summary):focus-visible { outline: 2px solid #a7f3d0; outline-offset: 3px; }
+@media (max-width: 1050px) {
+  .studio-header, .drawing-controls, .style-panel { padding-left: 14px; padding-right: 14px; }
+  .style-grid { grid-template-columns: repeat(3, minmax(65px, 1fr)); }
+}
+@media (max-width: 700px) {
+  .code-col { width: 38%; min-width: 180px; }
+  .drawing-controls { grid-template-columns: 1fr; gap: 10px; }
+  .style-grid { grid-template-columns: repeat(2, minmax(60px, 1fr)); }
+  .studio-header h2 { font-size: 17px; }
+  .playback-status { width: 100%; }
+}
+
+/* Saved creative variations: snapshots plus a non-destructive route to editing. */
+.variation-panel { flex-shrink: 0; padding: 12px 22px; border-top: 1px solid #2c3447; background: #111725; }
+.variation-panel summary { cursor: pointer; font-size: 12px; font-weight: 600; color: #d3e3f1; }
+.variation-help { margin-top: 10px; color: #93a7bc; font-size: 11px; line-height: 1.6; }
+.variation-save { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin-top: 12px; }
+.variation-save label { display: flex; flex: 1; min-width: 140px; flex-direction: column; gap: 5px; font-size: 11px; color: #bdccdc; }
+.variation-save input { width: 100%; min-height: 34px; border: 1px solid #3a465d; border-radius: 6px; padding: 7px 9px; background: #202a3c; color: #e6edf5; font: inherit; }
+.variation-notice { color: #a7f3d0; font-size: 11px; line-height: 1.5; margin-top: 8px; }
+.variation-notice:empty { display: none; }
+.variation-gallery { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-height: 250px; overflow: auto; margin-top: 12px; }
+.variation-card { display: flex; align-items: center; min-width: 0; gap: 12px; padding: 10px; border: 1px solid #2c3447; border-radius: 8px; background: #171f30; }
+.variation-card img { width: 72px; height: 72px; object-fit: contain; border-radius: 5px; border: 1px solid #3a465d; flex-shrink: 0; }
+.variation-info { min-width: 0; }
+.variation-info strong { font-size: 12px; overflow-wrap: anywhere; }
+.variation-info p { font-size: 11px; color: #93a7bc; margin: 5px 0 8px; }
+.variation-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+.variation-actions .studio-btn { min-height: 28px; padding: 5px 7px; font-size: 10px; }
+@media (max-width: 1050px) { .variation-panel { padding-left: 14px; padding-right: 14px; } }
+@media (max-width: 700px) { .variation-gallery { grid-template-columns: minmax(0, 1fr); } .variation-card { flex-wrap: wrap; } }
