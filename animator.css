@@ -259,7 +259,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; }
 .studio-pane input[type="range"] { width: 100%; min-height: 28px; accent-color: #a7f3d0; cursor: pointer; }
 .style-panel { flex-shrink: 0; border-top: 1px solid #2c3447; padding: 12px 22px; background: #111725; }
 .style-panel summary { cursor: pointer; color: #d3e3f1; font-size: 12px; font-weight: 600; }
-.style-grid { display: grid; grid-template-columns: minmax(100px, 1.3fr) 70px 80px minmax(90px, 1fr) auto; align-items: end; gap: 12px; margin-top: 14px; }
+.style-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); align-items: end; gap: 12px; margin-top: 14px; }
 .style-grid input[type="color"] { width: 100%; height: 32px; padding: 2px; border: 1px solid #3a465d; border-radius: 5px; background: #202a3c; cursor: pointer; }
 .style-footer { display: flex; gap: 12px; align-items: center; margin-top: 12px; }
 .style-footer p { color: #93a7bc; font-size: 11px; line-height: 1.5; }
