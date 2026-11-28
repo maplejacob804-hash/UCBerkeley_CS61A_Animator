@@ -304,3 +304,38 @@ html, body { width: 100%; height: 100%; overflow: hidden; }
 .timeline-panel input { width: 100%; margin: 0; accent-color: #b2f2d2; cursor: pointer; }
 .timeline-panel input:disabled { cursor: default; opacity: .45; }
 .timeline-panel p { margin: 0; font-size: 11px; color: #97a5bb; }
+
+/* Give the artwork priority; expanded settings scroll within their own dock. */
+.code-col { width: 34%; min-width: 240px; max-width: 520px; }
+.studio-pane { overflow: hidden; }
+.studio-header { flex: 0 0 auto; padding: 10px 14px; gap: 8px 12px; }
+.studio-header > div:first-child { flex: 1 1 120px; }
+.studio-header h2 { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.studio-eyebrow { font-size: 9px; letter-spacing: .08em; margin-bottom: 3px; white-space: nowrap; }
+.studio-btn { padding: 5px 9px; min-height: 30px; }
+.playback-controls { gap: 5px; }
+.studio-pane .canvas-area { flex: 1 1 auto; min-height: min(240px, 40vh); }
+.timeline-panel { flex: 0 0 auto; grid-template-columns: auto minmax(70px, 1fr); align-items: center; gap: 12px; padding: 6px 14px; }
+.timeline-panel label { font-size: 11px; white-space: nowrap; }
+.controls-dock { flex: 0 1 auto; min-height: 0; max-height: 32vh; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.drawing-controls { gap: 12px; padding: 8px 14px; }
+.drawing-controls label, .style-grid label { gap: 4px; font-size: 11px; }
+.style-panel, .variation-panel { padding: 8px 14px; }
+.style-panel summary, .variation-panel summary { min-height: 24px; line-height: 24px; }
+.style-grid { margin-top: 8px; gap: 8px; }
+.style-footer { margin-top: 8px; }
+@media (max-width: 700px) {
+  .code-col { width: 30%; min-width: 160px; }
+  .studio-header > div:first-child { flex-basis: 100%; }
+  .studio-eyebrow { display: none; }
+  .playback-status { width: auto; }
+  .drawing-controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px 10px; }
+  .drawing-controls > label:first-child { grid-column: 1 / -1; }
+  .controls-dock { max-height: 30vh; }
+  .timeline-panel { gap: 6px; padding-left: 10px; padding-right: 10px; }
+}
+@media (max-height: 500px) {
+  .studio-pane .canvas-area { min-height: 100px; }
+  .controls-dock { max-height: 26vh; }
+  .studio-eyebrow { display: none; }
+}
